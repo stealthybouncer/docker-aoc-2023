@@ -1,0 +1,35 @@
+services:
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: /Users/francisrodrigues/documents/docker_dir/input
+        target: /input
+      - type: bind
+        source: /Users/francisrodrigues/documents/docker_dir/output
+        target: /output
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    command: sleep infinity
+  app:
+    entrypoint:
+    - sleep
+    - infinity
+    image: docker/dev-environments-default:stable-1
+    init: true
+    volumes:
+      - type: bind
+        source: /Users/francisrodrigues/documents/docker_dir/input
+        target: /input
+      - type: bind
+        source: /Users/francisrodrigues/documents/docker_dir/output
+        target: /output
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
